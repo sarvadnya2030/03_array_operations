@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Operations - JavaScript</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 30px 0;
+        }
+        
+        .container {
+            max-width: 1000px;
+        }
+        
+        .main-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .card-header-custom {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px;
+        }
+        
+        .operation-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #1e3c72;
+        }
+        
+        .array-display {
+            background: #2a5298;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            margin: 15px 0;
+        }
+        
+        .result-box {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            min-height: 50px;
+            border: 2px dashed #1e3c72;
+        }
+        
+        .btn-custom {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-custom:hover {
+            background: #2a5298;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline-custom {
+            border: 2px solid #1e3c72;
+            color: #1e3c72;
+            background: transparent;
+            padding: 8px 18px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-custom:hover {
+            background: #1e3c72;
+            color: white;
+        }
+        
+        .form-control:focus {
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 0.2rem rgba(30, 60, 114, 0.25);
+        }
+        
+        .nav-pills .nav-link.active {
+            background: #1e3c72;
+        }
+        
+        .nav-pills .nav-link {
+            color: #1e3c72;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-card">
+            <div class="card-header-custom">
+                <h3 class="mb-1">📊 Array Operations in JavaScript</h3>
+                <p class="mb-0">Reverse, Sort, and Search operations</p>
+            </div>
+            
+            <div class="p-4">
+                <!-- Input Section -->
+                <div class="operation-card">
+                    <h5 class="mb-3">🔢 Input Array</h5>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input type="text" id="arrayInput" class="form-control" placeholder="Enter numbers separated by commas (e.g., 5,3,8,1,9)" value="5,3,8,1,9,2,7">
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-custom w-100" onclick="setArray()">Set Array</button>
+                        </div>
+                    </div>
+                    <div class="array-display mt-3" id="currentArray">
+                        Current Array: [5, 3, 8, 1, 9, 2, 7]
+                    </div>
+                </div>
+                
+                <!-- Operations Tabs -->
+                <ul class="nav nav-pills mb-4" id="operationPills" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" id="reverse-tab" data-bs-toggle="pill" data-bs-target="#reverse" type="button">
+                            Reverse
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="sort-tab" data-bs-toggle="pill" data-bs-target="#sort" type="button">
+                            Sort
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="search-tab" data-bs-toggle="pill" data-bs-target="#search" type="button">
+                            Search
+                        </button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="operationPillsContent">
+                    <!-- Reverse Section -->
+                    <div class="tab-pane fade show active" id="reverse" role="tabpanel">
+                        <div class="operation-card">
+                            <h5>🔄 Reverse Array</h5>
+                            <p class="text-muted">Reverse the order of elements in the array</p>
+                            
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <button class="btn btn-custom w-100 mb-2" onclick="reverseUsingLoop()">
+                                        Reverse (For Loop)
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-outline-custom w-100 mb-2" onclick="reverseUsingSpread()">
+                                        Reverse (Spread Operator)
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <button class="btn btn-outline-custom w-100 mb-2" onclick="reverseUsingReduce()">
+                                        Reverse (Reduce)
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-outline-custom w-100 mb-2" onclick="reverseBuiltIn()">
+                                        Reverse (Built-in)
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <h6 class="mt-3">Result:</h6>
+                            <div class="result-box" id="reverseResult">
+                                Click a button to see the result...
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sort Section -->
+                    <div class="tab-pane fade" id="sort" role="tabpanel">
+                        <div class="operation-card">
+                            <h5>📈 Sort Array</h5>
+                            <p class="text-muted">Sort the array in ascending or descending order</p>
+                            
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <button class="btn btn-custom w-100 mb-2" onclick="sortAscending()">
+                                        Sort Ascending ↑
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-outline-custom w-100 mb-2" onclick="sortDescending()">
+                                        Sort Descending ↓
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <button class="btn btn-outline-custom w-100 mb-2" onclick="bubbleSort()">
+                                        Bubble Sort
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-outline-custom w-100 mb-2" onclick="selectionSort()">
+                                        Selection Sort
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <h6 class="mt-3">Result:</h6>
+                            <div class="result-box" id="sortResult">
+                                Click a button to see the result...
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Search Section -->
+                    <div class="tab-pane fade" id="search" role="tabpanel">
+                        <div class="operation-card">
+                            <h5>🔍 Search Array</h5>
+                            <p class="text-muted">Find elements in the array using different algorithms</p>
+                            
+                            <div class="row mt-3">
+                                <div class="col-md-8">
+                                    <input type="number" id="searchInput" class="form-control" placeholder="Enter number to search">
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-custom w-100" onclick="linearSearch()">
+                                        Linear Search
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <button class="btn btn-outline-custom w-100 mb-2" onclick="binarySearch()">
+                                        Binary Search (Sorted)
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-outline-custom w-100 mb-2" onclick="findIndex()">
+                                        Find Index (Built-in)
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <h6 class="mt-3">Result:</h6>
+                            <div class="result-box" id="searchResult">
+                                Enter a number and click a search button...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Array Info -->
+                <div class="operation-card mt-4">
+                    <h5>📋 Array Information</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p><strong>Length:</strong> <span id="arrayLength">7</span></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>Min:</strong> <span id="arrayMin">1</span></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>Max:</strong> <span id="arrayMax">9</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentArray = [5, 3, 8, 1, 9, 2, 7];
+        
+        function setArray() {
+            const input = document.getElementById('arrayInput').value;
+            currentArray = input.split(',').map(num => parseInt(num.trim())).filter(num => !isNaN(num));
+            updateDisplay();
+        }
+        
+        function updateDisplay() {
+            document.getElementById('currentArray').textContent = 'Current Array: [' + currentArray.join(', ') + ']';
+            document.getElementById('arrayLength').textContent = currentArray.length;
+            document.getElementById('arrayMin').textContent = Math.min(...currentArray);
+            document.getElementById('arrayMax').textContent = Math.max(...currentArray);
+        }
+        
+        // Reverse Operations
+        function reverseUsingLoop() {
+            let reversed = [];
+            for (let i = currentArray.length - 1; i >= 0; i--) {
+                reversed.push(currentArray[i]);
+            }
+            document.getElementById('reverseResult').textContent = 'For Loop Reverse: [' + reversed.join(', ') + ']';
+        }
+        
+        function reverseUsingSpread() {
+            let reversed = [...currentArray].reverse();
+            document.getElementById('reverseResult').textContent = 'Spread Reverse: [' + reversed.join(', ') + ']';
+        }
+        
+        function reverseUsingReduce() {
+            let reversed = currentArray.reduce((acc, val) => [val, ...acc], []);
+            document.getElementById('reverseResult').textContent = 'Reduce Reverse: [' + reversed.join(', ') + ']';
+        }
+        
+        function reverseBuiltIn() {
+            let reversed = [...currentArray].reverse();
+            document.getElementById('reverseResult').textContent = 'Built-in Reverse: [' + reversed.join(', ') + ']';
+        }
+        
+        // Sort Operations
+        function sortAscending() {
+            let sorted = [...currentArray].sort((a, b) => a - b);
+            document.getElementById('sortResult').textContent = 'Ascending: [' + sorted.join(', ') + ']';
+        }
+        
+        function sortDescending() {
+            let sorted = [...currentArray].sort((a, b) => b - a);
+            document.getElementById('sortResult').textContent = 'Descending: [' + sorted.join(', ') + ']';
+        }
+        
+        function bubbleSort() {
+            let arr = [...currentArray];
+            let n = arr.length;
+            for (let i = 0; i < n - 1; i++) {
+                for (let j = 0; j < n - i - 1; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                    }
+                }
+            }
+            document.getElementById('sortResult').textContent = 'Bubble Sort: [' + arr.join(', ') + ']';
+        }
+        
+        function selectionSort() {
+            let arr = [...currentArray];
+            let n = arr.length;
+            for (let i = 0; i < n - 1; i++) {
+                let minIdx = i;
+                for (let j = i + 1; j < n; j++) {
+                    if (arr[j] < arr[minIdx]) {
+                        minIdx = j;
+                    }
+                }
+                [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+            }
+            document.getElementById('sortResult').textContent = 'Selection Sort: [' + arr.join(', ') + ']';
+        }
+        
+        // Search Operations
+        function linearSearch() {
+            const target = parseInt(document.getElementById('searchInput').value);
+            if (isNaN(target)) {
+                document.getElementById('searchResult').textContent = 'Please enter a valid number';
+                return;
+            }
+            
+            for (let i = 0; i < currentArray.length; i++) {
+                if (currentArray[i] === target) {
+                    document.getElementById('searchResult').textContent = `Linear Search: Found ${target} at index ${i}`;
+                    return;
+                }
+            }
+            document.getElementById('searchResult').textContent = `Linear Search: ${target} not found in array`;
+        }
+        
+        function binarySearch() {
+            const target = parseInt(document.getElementById('searchInput').value);
+            if (isNaN(target)) {
+                document.getElementById('searchResult').textContent = 'Please enter a valid number';
+                return;
+            }
+            
+            let sorted = [...currentArray].sort((a, b) => a - b);
+            let left = 0, right = sorted.length - 1, found = false, index = -1;
+            
+            while (left <= right) {
+                let mid = Math.floor((left + right) / 2);
+                if (sorted[mid] === target) {
+                    found = true;
+                    index = mid;
+                    break;
+                } else if (sorted[mid] < target) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+            
+            if (found) {
+                document.getElementById('searchResult').textContent = `Binary Search: Found ${target} at sorted index ${index}`;
+            } else {
+                document.getElementById('searchResult').textContent = `Binary Search: ${target} not found (Array was sorted first)`;
+            }
+        }
+        
+        function findIndex() {
+            const target = parseInt(document.getElementById('searchInput').value);
+            if (isNaN(target)) {
+                document.getElementById('searchResult').textContent = 'Please enter a valid number';
+                return;
+            }
+            
+            let index = currentArray.indexOf(target);
+            if (index !== -1) {
+                document.getElementById('searchResult').textContent = `Find Index: ${target} found at index ${index}`;
+            } else {
+                document.getElementById('searchResult').textContent = `Find Index: ${target} not found`;
+            }
+        }
+        
+        $(document).ready(function() {
+            updateDisplay();
+        });
+    </script>
+</body>
+</html>
